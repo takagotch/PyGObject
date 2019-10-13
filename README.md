@@ -102,7 +102,6 @@ class TestVFuncsWithObjectArg(unittest.TestCase):
       warnings.simplefilter('always')
       
 
-class TestVFuncsWithFloatingArg(unittest.TestCase):
 
 
 class TestVFuncsWithHeldObjectArg(unittest.TestCase):
@@ -122,21 +121,7 @@ class TestVFuncsWithHeldFloatingArg(unittest.TestCase):
     if hasattr(sys, "getrefcount"):
       self.assertTrue(issubclass(warn[0].category, RuntimeWarning))
       
-    
   
-
-
-
-
-
-
-
-
-
-
-
-
-
 @unittest.skipIf(Regress is None, 'Regress is required')
 class TestArgumentTypeErrors(unittest.TestCase):
   def test_object_argument_type_error(self):
