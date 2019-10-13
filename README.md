@@ -65,7 +65,30 @@ class VFuncsBase(GIMarshallingTests.Object):
 
 
 
+@unittest.skipIf(Regress is None, 'Regress is required')
+class TestArgumentTypeErrors(unittest.TestCase):
+  def test_object_argument_type_error(self):
+    obj = Regress.Test()
+    obj.set_bare(GObject.Object())
+    obj.set_bare(None)
+    
+    self.assertRaises(TypeError, obj.set_bare, object())
+    self.assertRaises(TypeError, obj.set_bare, 42)
+    self.assertRaises(TypeError, obj.set_bare, 'not an object')
 
+  def test_instance_argument_error(self):
+    obj = Regress.TestObj()
+    self.assertEqual(Regress.TestObj.instance.instance_method, object())
+    self.assertRaises(TypeError, Regress.TestObj.instance_method, object())
+    self.assertRaises(TypeError, Regress.TestObj.instance_method, GObject.Object())
+    self.assertRaises(TypeError, Regress.TestObj.instance_method, 42)
+    self.assertRaises(TypeError, Regress.TestObj.instance_method, 'not an object')
+  
+  def test_instance_argument_base_type_error(self):
+    obj = Regress.TestSubObj()
+    self.assertEqual(Regress.TestSubObj.instance_method(obj), 0)
+    self.assertRaises(TypeError, Regress.TestSubObj.instance_method, GObject.Object())
+    self.assertRaises(TypeError, Regress.TestSubObj.instance_method, Regress.TestObj())
 ```
 
 ```
